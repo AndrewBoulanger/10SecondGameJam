@@ -30,6 +30,7 @@ public class MovementComponent : MonoBehaviour
     Vector3 moveDirection = Vector3.zero;
     Vector2 LookInput = Vector2.zero;
 
+    public LayerMask toIgnore;
 
     public void Awake()
     {
@@ -39,6 +40,7 @@ public class MovementComponent : MonoBehaviour
         if(animator == null)
             animator = GetComponentInChildren<Animator>();
 
+        toIgnore = ~toIgnore;
     }
 
 
@@ -114,16 +116,22 @@ public class MovementComponent : MonoBehaviour
 
     private void GroundCheck()
     {
-       RaycastHit hit;
-        if(Physics.Raycast(transform.position, Vector3.down, out hit, 0.25f))
+       var overlapping = Physics.OverlapSphere(transform.position, 0.25f, toIgnore);
+        if(overlapping.Length != 0)
         {
             playerController.isJumping = false;
             animator.SetBool(isJumpingHash, playerController.isJumping);
 
-            transform.parent = hit.transform;
+            transform.parent = overlapping[0].transform;
+            
         }
         else
+        { 
             playerController.isJumping = true;
+            transform.parent = null;
+        }
             
     }
+
+    
 }
