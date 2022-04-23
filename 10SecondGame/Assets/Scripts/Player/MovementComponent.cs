@@ -35,7 +35,7 @@ public class MovementComponent : MonoBehaviour
     Vector2 LookInput = Vector2.zero;
 
     public LayerMask toIgnore;
-
+    public AudioClip jump;
     public void Awake()
     {
         rigidbody = GetComponent<Rigidbody>();
@@ -137,7 +137,7 @@ public class MovementComponent : MonoBehaviour
         
         rigidbody.AddForce(transform.up * jumpForce, ForceMode.Impulse);
         animator.SetBool(isJumpingHash, playerController.isJumping);
-
+        PersistantBGMPlayer.PlaySFX(jump);
         transform.parent = null;
     }
 

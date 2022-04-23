@@ -12,6 +12,7 @@ public class PlayerController : MonoBehaviour
 
     public GameUIController uIController;
 
+    public AudioClip hurt;
     public void Awake()
     {
         if (uIController == null)
@@ -66,6 +67,7 @@ public class PlayerController : MonoBehaviour
             PlayerEvents.Invoke_OnFloorCollision();
             transform.position = startPos;
             transform.rotation = startQuat;
+            PersistantBGMPlayer.PlaySFX(hurt);
         }
     }
 }

@@ -10,6 +10,8 @@ public class ManuUiController : MonoBehaviour
 
     private GameHUDWidget ActiveWidget;
 
+    [SerializeField]
+    AudioClip click;
 
     private void Start()
     {
@@ -25,11 +27,16 @@ public class ManuUiController : MonoBehaviour
        
         ActiveWidget = InstructionsCanvas;
         ActiveWidget.EnableWidget();
+        PersistantBGMPlayer.PlaySFX(click);
     }
 
     public void EnableMainMenu()
     {
-        if (ActiveWidget) ActiveWidget.DisableWidget();
+        if (ActiveWidget)
+        { 
+            PersistantBGMPlayer.PlaySFX(click);
+            ActiveWidget.DisableWidget();
+        }
 
         ActiveWidget = MenuCanvas;
         ActiveWidget.EnableWidget();
@@ -41,6 +48,7 @@ public class ManuUiController : MonoBehaviour
 
         ActiveWidget = CreditsCanvas;
         ActiveWidget.EnableWidget();
+        PersistantBGMPlayer.PlaySFX(click);
     }
 
     public void DisableAllMenus()

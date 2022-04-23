@@ -17,6 +17,7 @@ public class GameScreen : GameHUDWidget
     }
     void OnEnable()
     {
+        Time.timeScale = 1;
         Cursor.lockState = CursorLockMode.Confined;
     }
 

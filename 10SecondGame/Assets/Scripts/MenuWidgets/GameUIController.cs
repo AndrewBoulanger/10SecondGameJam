@@ -57,6 +57,7 @@ public class GameUIController : MonoBehaviour
 
         ActiveWidget = WinScreen;
         ActiveWidget.EnableWidget();
+        
     }
 
     public void DisableAllMenus()
