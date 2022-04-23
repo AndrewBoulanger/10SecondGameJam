@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class PlayerEvents
 {
-    public delegate void OnPlayerDeathEvent();
-    public static event OnPlayerDeathEvent OnPlayerDeath;
+    public delegate void OnPlayerLoseEvent();
+    public static event OnPlayerLoseEvent OnPlayerDeath;
 
-    public static void Invoke_OnPlayerDeath()
+    public static void Invoke_OnPlayerLose()
     {
         OnPlayerDeath?.Invoke();
     }
@@ -18,6 +18,14 @@ public class PlayerEvents
     public static void Invoke_OnPlayerWin()
     {
         OnPlayerWin?.Invoke();
+    }
+
+    public delegate void CollisionWithFloor();
+    public static event CollisionWithFloor OnFloorCollision;
+
+    public static void Invoke_OnFloorCollision()
+    {
+        OnFloorCollision?.Invoke();
     }
 
 }

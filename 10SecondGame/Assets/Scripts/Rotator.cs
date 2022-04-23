@@ -8,11 +8,11 @@ public class Rotator : MonoBehaviour
     public float rotationSpeed = 5;
     float timer, rotSOfar ;
 
-    Vector3 rotationDir = Vector3.up;
+    Vector3 rotationDir = Vector3.back;
 
     bool isRotating = false;
 
-    List<Vector3> dirs = new List<Vector3> {Vector3.up, Vector3.down, Vector3.left , Vector3.right, Vector3.forward, Vector3.back };
+    List<Vector3> dirs = new List<Vector3> {Vector3.back };
 
 
     // Start is called before the first frame update
@@ -43,11 +43,21 @@ public class Rotator : MonoBehaviour
         }
 
     }
+    public string getRotatingText()
+    {
+        if(isRotating)
+            return "Rotating...";
+        else
+        {
+            System.TimeSpan time = System.TimeSpan.FromSeconds(timer);
+            return time.ToString("ss\\.ff");
+        }
+    }
 
     void StartRotating()
     {
-        int random = Random.Range(0, dirs.Count);
-        rotationDir = dirs[random];
+       // int random = Random.Range(0, dirs.Count);
+       // rotationDir = dirs[random];
 
         isRotating = true;
     }
@@ -59,4 +69,18 @@ public class Rotator : MonoBehaviour
         timer = timeTilRotate;
     }
 
+    void resetRotation()
+    {
+        StopRotating();
+        transform.rotation = Quaternion.identity;
+    }
+
+    private void OnEnable()
+    {
+        PlayerEvents.OnFloorCollision += resetRotation;
+    }
+    private void OnDisable()
+    {
+        PlayerEvents.OnFloorCollision -= resetRotation;
+    }
 }

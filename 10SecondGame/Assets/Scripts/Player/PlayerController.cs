@@ -7,6 +7,8 @@ public class PlayerController : MonoBehaviour
 {
     public bool isMoving, isJumping, isPaused;
 
+    Vector3 startPos;
+    Quaternion startQuat;
 
     public GameUIController uIController;
 
@@ -14,6 +16,8 @@ public class PlayerController : MonoBehaviour
     {
         if (uIController == null)
             uIController = FindObjectOfType<GameUIController>();
+        startPos = transform.position;
+        startQuat = transform.rotation;
     }
 
     public void OnPause(InputValue input)
@@ -40,5 +44,28 @@ public class PlayerController : MonoBehaviour
     {
         uIController.EnableWinScreen();
         PauseGameCheck();
+    }
+
+    private void OnEnable()
+    {
+        PlayerEvents.OnPlayerDeath += OnLose;
+        PlayerEvents.OnPlayerWin += OnWin;
+    }
+    private void OnDisable()
+    {
+        PlayerEvents.OnPlayerDeath -= OnLose;
+        PlayerEvents.OnPlayerWin -= OnWin;
+    }
+
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if(collision.gameObject.CompareTag("KillFloor"))
+        {
+            GetComponent<Rigidbody>().velocity = Vector3.zero;
+            PlayerEvents.Invoke_OnFloorCollision();
+            transform.position = startPos;
+            transform.rotation = startQuat;
+        }
     }
 }
