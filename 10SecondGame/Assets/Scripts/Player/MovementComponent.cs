@@ -132,7 +132,9 @@ public class MovementComponent : MonoBehaviour
     public void Jump()
     {
         playerController.isJumping = true;
-
+        Vector3 stopY = new Vector3(rigidbody.velocity.x, 0, rigidbody.velocity.z);
+        rigidbody.velocity = stopY;
+        
         rigidbody.AddForce(transform.up * jumpForce, ForceMode.Impulse);
         animator.SetBool(isJumpingHash, playerController.isJumping);
 

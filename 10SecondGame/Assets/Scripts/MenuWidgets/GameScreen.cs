@@ -15,4 +15,14 @@ public class GameScreen : GameHUDWidget
     {
         timeText.text = rotator.getRotatingText();
     }
+    void OnEnable()
+    {
+        Cursor.lockState = CursorLockMode.Confined;
+    }
+
+    private void OnDisable()
+    {
+        Cursor.lockState = CursorLockMode.None;
+    }
+
 }
